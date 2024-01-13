@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Storage Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+        /* Style for login modal overlay */
+        #loginOverlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        #loginModal {
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        #loginForm {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #loginModal input {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!--<div id="loginOverlay">
+        <div id="loginModal">
+            <h2>Login</h2>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="submit">Login</button>
+            </form>
+        </div>>
+    </div>-->
+    <div id="map"></div>
+    <div id="addMarkerForm" class="form-container">
+        <h2>Add Marker</h2>
+        <form id="markerForm" onsubmit="addMarker(event)">
+            <!-- Remove the latitude and longitude input fields -->
+            <!-- <label for="latitude">Latitude:</label>
+            <input type="number" step="any" id="latitude" name="latitude" required>
+    
+            <label for="longitude">Longitude:</label>
+            <input type="number" step="any" id="longitude" name="longitude" required> -->
+    
+            <!-- Add the marker name input field -->
+            <label for="markerName">Marker Name:</label>
+            <input type="text" id="markerName" name="markerName" required>
+    
+            <div id="contactsContainer"></div>
+    
+            <button type="button" onclick="addContact()">Add Contact</button>
+            <button type="submit">Add Marker</button>
+        </form>
+    </div>
+    
+
+    <button onclick="showForm('addMarkerForm')" class="add-marker-btn">Add Marker</button>
+    <button onclick="showForm('removeMarkerForm')" class="remove-marker-btn">Remove Marker</button>
+
+    <div id="removeMarkerForm" class="form-container">
+        <h2>Remove Marker</h2>
+        <label for="removeMarkerName">Marker Name:</label>
+        <input type="text" id="removeMarkerName" name="removeMarkerName" required>
+        <button type="button" onclick="removeMarker()">Remove Marker</button>
+    </div>
+    <!-- Add this to your existing form -->
+    <label for="removeContactMarkerName">Marker Name:</label>
+    <input type="text" id="removeContactMarkerName" name="removeContactMarkerName" required>
+
+    <label for="removeContactName">Contact Name:</label>
+    <input type="text" id="removeContactName" name="removeContactName" required>
+
+    <button type="button" onclick="removeContact()">Remove Contact</button>
+
+    <div id="removeContactForm" class="form-container">
+        <h2>Remove Contact</h2>
+        <button class="minimize-btn" onclick="toggleRemoveContactForm()">Minimize</button>
+        <button class="maximize-btn" onclick="toggleRemoveContactForm()">Maximize</button>
+        <form id="removeContactFormContent">
+            <!-- Add your existing remove contact form content here -->
+            <!-- ... -->
+
+            <button type="button" onclick="removeContact()">Remove Contact</button>
+        </form>
+    </div>
+
+        </form>
+    </div>
+    <!-- Add these buttons to your existing HTML -->
+<button onclick="storeMarkersInDatabase()" class="store-in-db-btn">Store in Database</button>
+<button onclick="retrieveMarkersFromDatabase()" class="retrieve-from-db-btn">Retrieve from Database</button>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="app.js"></script>
+    <script>
+        // Function to show login overlay
+        function showLoginOverlay() {
+            var loginOverlay = document.getElementById("loginOverlay");
+            loginOverlay.style.display = "flex";
+        }
+
+        // Function to hide login overlay
+        function hideLoginOverlay() {
+            var loginOverlay = document.getElementById("loginOverlay");
+            loginOverlay.style.display = "none";
+        }
+
+        // Function to handle login
+        function handleLogin(event) {
+            event.preventDefault();
+
+            // Add your login logic here
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+
+            // Replace this with your actual login validation
+            if (username === "admin" && password === "admin") {
+                // Successful login, hide the login overlay
+                hideLoginOverlay();
+            } else {
+                alert("Invalid username or password. Please try again.");
+            }
+        }
+
+        // Show login overlay on page load
+        window.onload = showLoginOverlay;
+    </script>
+</body>
+
+</html>
